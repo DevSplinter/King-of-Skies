@@ -10,26 +10,30 @@
 </head>
 
 <body>
-    <section class="canvas-box">
-        <canvas width="800" height="500" id="game-box"></canvas>
-        <canvas width="800" height="500" id="sky"></canvas>
-    </section>
-    <section class="legend">
-        <div class="legend__box">
-            <img class="legend__img" src="img/modern-jet.png">
-            <p class="legend__description"></p>
+    <header>
+        <h1 class="main-title">Zostań królem przestworzy!</h1>
+    </header>
+    <section class="main-box">
+        <div class="control-panel">
+            <div class="control-panel__box">
+                <output class="control-panel__cash" name="cash">100</output>
+                <i class="control-panel__cash fa fa-eur" aria-hidden="true"></i>
+            </div>
+            <div class="control-panel__box">
+                <output class="control-panel__life" name="life">1</output>
+                <i class="control-panel__heart fa fa-heartbeat" aria-hidden="true"></i>
+            </div>
+        </div>
+        <canvas width="800" height="500" class="canvas" id="game-box"></canvas>
+        <div class="legend">
+            <h2 class="legend__title">LEGENDA:</h2>
+            <div class="legend__box">
+                <img class="legend__img" src="img/modern-jet.png">
+                <p class="legend__description"> - Modern Jet</p>
+            </div>
         </div>
     </section>
-    <section class="control-panel">
-        <div class="control-panel__box">
-            <i class="fa fa-eur" aria-hidden="true"></i>
-            <output class="control-panel__cash" name="cash"></output>
-        </div>
-        <div class="control-panel__box">
-            <i class="fa fa-heartbeat" aria-hidden="true"></i>
-            <output class="control-panel__life" name="life"></output>
-        </div>
-    </section>
+
 
     <script src="js/scripts.js"></script>
 </body>

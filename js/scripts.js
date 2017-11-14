@@ -1,5 +1,4 @@
 const canvas = document.querySelector('#game-box');
-const canvasSky = document.querySelector('#sky');
 const ctx = canvas.getContext('2d');
 const plane = document.querySelector('img');
 let canvasTop = canvas.offsetTop;
@@ -76,8 +75,8 @@ createEnemy();
 
 
 function drawing(){
-    let xMax = canvasSky.width;
-	let yMax = canvasSky.height;
+    let xMax = canvas.width;
+	let yMax = canvas.height;
     let hmTimes = Math.round(xMax + yMax);	
 	
 	for(let i=0; i<=hmTimes; i++) {
