@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>game</title>
@@ -7,10 +8,14 @@
     <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
 
 </head>
+
 <body>
-    <canvas width="500" height="500" id="game-box"></canvas>
+    <section class="canvas-box">
+        <canvas width="800" height="500" id="game-box"></canvas>
+        <canvas width="800" height="500" id="sky"></canvas>
+    </section>
     <section class="legend">
-       <div class="legend__box">
+        <div class="legend__box">
             <img class="legend__img" src="img/modern-jet.png">
             <p class="legend__description"></p>
         </div>
@@ -25,7 +30,8 @@
             <output class="control-panel__life" name="life"></output>
         </div>
     </section>
-    
+
     <script src="js/scripts.js"></script>
 </body>
+
 </html>

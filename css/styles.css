@@ -1,4 +1,6 @@
 #game-box {
-  border: solid 1px #000; }
+  border: solid 1px #000;
+  background: linear-gradient(#00111e 30%, #033d5e);
+  overflow: hidden; }
 
 /*# sourceMappingURL=styles.css.map */
