@@ -9,35 +9,23 @@
 </head>
 <body>
     <canvas width="500" height="500" id="game-box"></canvas>
-    <img src="img/modern-jet.png">
+    <section class="legend">
+       <div class="legend__box">
+            <img class="legend__img" src="img/modern-jet.png">
+            <p class="legend__description"></p>
+        </div>
+    </section>
+    <section class="control-panel">
+        <div class="control-panel__box">
+            <i class="fa fa-eur" aria-hidden="true"></i>
+            <output class="control-panel__cash" name="cash"></output>
+        </div>
+        <div class="control-panel__box">
+            <i class="fa fa-heartbeat" aria-hidden="true"></i>
+            <output class="control-panel__life" name="life"></output>
+        </div>
+    </section>
+    
     <script src="js/scripts.js"></script>
 </body>
 </html>
-
-
-
-
-<!--
-<body>
-   <h1></h1>
-    <section>
-        <div class="game-box">
-            <i class="enemy fa fa-fighter-jet" aria-hidden="true"></i>
-        </div>
-    </section>
-    <section class="legend">
-        <i class="enemy fa fa-fighter-jet" aria-hidden="true"></i>
-        <p class="legend__description">Figter Jet - 1 życie</p>
-    </section>
-    <section class="control-panel">
-       <div class="control-panel__cash">
-           <i class="fa fa-eur" aria-hidden="true"></i>
-            <output name="cash"></output>
-       </div>
-        <div class="control-panel__life">
-            <i class="fa fa-heartbeat" aria-hidden="true"></i>
-            <output name="life">2</output>
-        </div>
-    </section>
-    <script src="js/scripts.js"></script>
-</body>-->
