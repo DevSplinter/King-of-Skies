@@ -2,13 +2,10 @@ const canvas = document.querySelector('#game-box');
 const ctx = canvas.getContext('2d');
 const plane = document.querySelector('img');
 let canvasTop = canvas.offsetTop;
-let sth2 = false;
 
 
   canvas.addEventListener('click', function(e){
-//      console.log('pozycja aa: ' + aa.xPosition + ', ' + aa.yPosition);
-//        console.log('pozycja aa2: ' + aa2.xPosition + ', ' + aa2.yPosition);
-//        console.log('pozycja aa3: ' + aa3.xPosition + ', ' + aa3.yPosition);
+
     let rect = canvas.getBoundingClientRect();
     let x = e.clientX - rect.left;
     let y = e.clientY - rect.top;
@@ -44,7 +41,7 @@ class Enemy{
     }
     drawPlane(x,y){        
         ctx.beginPath();
-        ctx.clearRect(x-8, y-33, 55, 40);
+        ctx.clearRect(x-5, y-32, 55, 40);
         ctx.drawImage(plane, x, y);
         ctx.rect(x, y, 32, 32);
         ctx.closePath();
@@ -63,15 +60,35 @@ class Enemy{
     
 }
 let counter = 0;
+let enemyArray = [];
 let newEnemy = new Enemy();
+
+
 function createEnemy(){
-    newEnemy[counter] = new Enemy();
+    newEnemy = new Enemy();
+    enemyArray.push(newEnemy);
+    
+//    enemyArray[counter].addEventListener('click', function(e){
+//    let rect = canvas.getBoundingClientRect();
+//    let x = e.clientX - rect.left;
+//    let y = e.clientY - rect.top;
+//      
+//      if(((this.xPosition + 32) > x && x > this.xPosition) && ((this.yPosition + 32) > y && y > yhis.yPosition)){
+//          console.log("trafiony obiekt aa");      
+//    
+//}})
+    console.log(enemyArray[counter]);
     counter++;
     if(counter < 10){
         setTimeout(createEnemy, 2000);
     }
 }
 createEnemy();
+
+
+
+
+
 
 
 function drawing(){

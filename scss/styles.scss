@@ -15,13 +15,14 @@ body{
     text-transform: uppercase;
 }
 .main-box{
-    font-size: 30px;
+    font-size: 20px;
     display: flex;
     flex-direction: row;
     background-color: rgba(255,255,255,0.5);
-    padding: 60px 100px;
+    padding: 30px;
     border: solid 3px #fff;
     border-radius: 15px;
+    width: 80%;
     .canvas{
         padding-left: 0;
         padding-right: 0;
@@ -32,9 +33,14 @@ body{
         cursor: url(../img/sight.png) 40 40, auto;
     }
     .control-panel{
+        width: 300px;
+        box-sizing: border-box;
         text-align: right;
         margin-right: 50px;
         margin-top:50px;
+        &__box{
+            margin:30px 0;
+        }
         &__cash{
             font-size: 30px;
         }
@@ -45,6 +51,8 @@ body{
         }
     }
     .legend{
+        width:300px;
+        box-sizing: border-box;
         margin-left: 50px;
         margin-top:50px;
         &__title{
@@ -52,7 +60,7 @@ body{
         }
         &__box{
             display: flex;
-            justify-content: center;
+            justify-content: flex-start;
             align-items: center;
         }
     }
