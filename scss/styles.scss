@@ -7,6 +7,7 @@ body{
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    user-select: none;
 }
 .main-title{
     font-size: 60px;
@@ -67,7 +68,7 @@ body{
 }
 #game-box{
     border: solid 1px #000;
-     background: linear-gradient(#00111e 30%, #033d5e);
+     background: linear-gradient(#267fc4 30%, #2283ba);
       overflow: hidden;
 }
 

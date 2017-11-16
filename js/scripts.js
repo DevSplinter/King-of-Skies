@@ -4,28 +4,28 @@ const plane = document.querySelector('img');
 let canvasTop = canvas.offsetTop;
 
 
-  canvas.addEventListener('click', function(e){
-
-    let rect = canvas.getBoundingClientRect();
-    let x = e.clientX - rect.left;
-    let y = e.clientY - rect.top;
-//    ctx.rect(80,100,32,32);
-//    if (ctx.isPointInPath(x,y)){
-//        console.log("trafiony");
-//    }
-      
-      if(((aa.xPosition + 32) > x && x > aa.xPosition) && ((aa.yPosition + 32) > y && y > aa.yPosition)){
-          console.log("trafiony obiekt aa");
-      }
-       if(((aa2.xPosition + 32) > x && x > aa2.xPosition) && ((aa2.yPosition + 32) > y && y > aa.yPosition)){
-          console.log("trafiony obiekt aa2");
-           delete aa2.interval;
-      }
-      if(((aa3.xPosition + 32) > x && x > aa3.xPosition) && ((aa3.yPosition + 32) > y && y > aa.yPosition)){
-          console.log("trafiony obiekt aa3");
-      }
-    
-});
+//  canvas.addEventListener('click', function(e){
+//
+//    let rect = canvas.getBoundingClientRect();
+//    let x = e.clientX - rect.left;
+//    let y = e.clientY - rect.top;
+////    ctx.rect(80,100,32,32);
+////    if (ctx.isPointInPath(x,y)){
+////        console.log("trafiony");
+////    }
+//      
+//      if(((aa.xPosition + 32) > x && x > aa.xPosition) && ((aa.yPosition + 32) > y && y > aa.yPosition)){
+//          console.log("trafiony obiekt aa");
+//      }
+//       if(((aa2.xPosition + 32) > x && x > aa2.xPosition) && ((aa2.yPosition + 32) > y && y > aa.yPosition)){
+//          console.log("trafiony obiekt aa2");
+//           delete aa2.interval;
+//      }
+//      if(((aa3.xPosition + 32) > x && x > aa3.xPosition) && ((aa3.yPosition + 32) > y && y > aa.yPosition)){
+//          console.log("trafiony obiekt aa3");
+//      }
+//    
+//});
 
 class Enemy{
     constructor(){
@@ -34,14 +34,15 @@ class Enemy{
         this.xPosition = this.randPosition();
         this.drawPlane();
         this.yPosition = this.interval();
+        this.intervalReset;
     }
     randPosition(){
-        let x;
+       let x;
        return x = Math.floor(Math.random()*700);
     }
     drawPlane(x,y){        
         ctx.beginPath();
-        ctx.clearRect(x-5, y-32, 55, 40);
+        ctx.clearRect(x, y-32, 32, 64);
         ctx.drawImage(plane, x, y);
         ctx.rect(x, y, 32, 32);
         ctx.closePath();
@@ -50,7 +51,7 @@ class Enemy{
         let y = 0;
         let x = this.xPosition;
         let that = this;
-        setInterval(function(){
+        this.intervalReset = setInterval(function(){
             y += 1;
             that.yPosition = y;
             that.drawPlane(x,y);
@@ -59,58 +60,35 @@ class Enemy{
     }
     
 }
-let counter = 0;
-let enemyArray = [];
-let newEnemy = new Enemy();
 
+
+
+   let counter = 0;
+   let enemyArray = [];
 
 function createEnemy(){
-    newEnemy = new Enemy();
-    enemyArray.push(newEnemy);
     
-//    enemyArray[counter].addEventListener('click', function(e){
-//    let rect = canvas.getBoundingClientRect();
-//    let x = e.clientX - rect.left;
-//    let y = e.clientY - rect.top;
-//      
-//      if(((this.xPosition + 32) > x && x > this.xPosition) && ((this.yPosition + 32) > y && y > yhis.yPosition)){
-//          console.log("trafiony obiekt aa");      
-//    
-//}})
-    console.log(enemyArray[counter]);
-    counter++;
     if(counter < 10){
+        enemyArray[counter] = new Enemy();
         setTimeout(createEnemy, 2000);
-    }
+        counter++;
+    }  
+
 }
-createEnemy();
-
-
-
-
-
-
-
-function drawing(){
-    let xMax = canvas.width;
-	let yMax = canvas.height;
-    let hmTimes = Math.round(xMax + yMax);	
-	
-	for(let i=0; i<=hmTimes; i++) {
-	  let randomX = Math.floor((Math.random()*xMax)+1);
-	  let randomY = Math.floor((Math.random()*yMax)+1);
-	  let randomSize = Math.floor((Math.random()*2)+1);
-	  let randomOpacityOne = Math.floor((Math.random()*9)+1);
-	  let randomOpacityTwo = Math.floor((Math.random()*9)+1);
-	  let randomHue = Math.floor((Math.random()*360)+1);
+canvas.addEventListener('click', function(e){
+     let rect = canvas.getBoundingClientRect();
+   let x = e.clientX - rect.left;
+  let y = e.clientY - rect.top;
+  //  ammo--;
     
-      ctx.shadowBlur = Math.floor((Math.random()*15)+5);
-      ctx.shadowColor = "white";
-	  
-    ctx.fillStyle = "hsla("+randomHue+", 30%, 80%, ."+randomOpacityOne+randomOpacityTwo+")";
-	  ctx.fillRect(randomX, randomY, randomSize, randomSize);
-	}
-  
-}
-
- drawing();
+    enemyArray.forEach(obj => {
+        if(((obj.xPosition + 32) > x && x > obj.xPosition) && ((obj.yPosition + 32) > y && y > obj.yPosition)){
+            clearInterval(obj.intervalReset);
+        }
+    });
+//  if(((aa3.xPosition + 32) > x && x > aa3.xPosition) && ((aa3.yPosition + 32) > y && y > aa.yPosition)){
+//         console.log("trafiony obiekt aa3");
+//    }
+    //clearInterval(enemyArray[e].intervalReset);
+})
+createEnemy();
