@@ -16,12 +16,15 @@
         <div class="control-panel">
            <h2 class="legend__title">STATYSTYKI:</h2>
             <div class="control-panel__box">
-                <output class="control-panel__cash" name="cash">100</output>
+                <output class="control-panel__cash" name="cash">0</output>
                 <i class="control-panel__cash fa fa-eur" aria-hidden="true"></i>
             </div>
             <div class="control-panel__box">
-                <output class="control-panel__life" name="life">1</output>
+                <output class="control-panel__life" name="life">2</output>
                 <i class="control-panel__heart fa fa-heartbeat" aria-hidden="true"></i>
+            </div>
+               <div class="control-panel__box">
+                <output class="control-panel__ammo" name="ammo">30</output>
             </div>
         </div>
         <canvas width="800" height="500" class="canvas" id="game-box"></canvas>
@@ -32,6 +35,7 @@
                 <p class="legend__description"> - Modern Jet</p>
             </div>
         </div>
+        <button class="btn-start-game" type="button">Rozpocznij przygodę!</button>
     </section>
 
     <script src="js/scripts.js"></script>

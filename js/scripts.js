@@ -2,30 +2,14 @@ const canvas = document.querySelector('#game-box');
 const ctx = canvas.getContext('2d');
 const plane = document.querySelector('img');
 let canvasTop = canvas.offsetTop;
+const button = document.querySelector('.btn-start-game');
+const cashOutput = document.querySelector('.control-panel__cash');
+const lifeOutput = document.querySelector('.control-panel__life');
+const ammoOutput = document.querySelector('.control-panel__ammo');
 
 
-//  canvas.addEventListener('click', function(e){
-//
-//    let rect = canvas.getBoundingClientRect();
-//    let x = e.clientX - rect.left;
-//    let y = e.clientY - rect.top;
-////    ctx.rect(80,100,32,32);
-////    if (ctx.isPointInPath(x,y)){
-////        console.log("trafiony");
-////    }
-//      
-//      if(((aa.xPosition + 32) > x && x > aa.xPosition) && ((aa.yPosition + 32) > y && y > aa.yPosition)){
-//          console.log("trafiony obiekt aa");
-//      }
-//       if(((aa2.xPosition + 32) > x && x > aa2.xPosition) && ((aa2.yPosition + 32) > y && y > aa.yPosition)){
-//          console.log("trafiony obiekt aa2");
-//           delete aa2.interval;
-//      }
-//      if(((aa3.xPosition + 32) > x && x > aa3.xPosition) && ((aa3.yPosition + 32) > y && y > aa.yPosition)){
-//          console.log("trafiony obiekt aa3");
-//      }
-//    
-//});
+
+
 
 class Enemy{
     constructor(){
@@ -55,12 +39,34 @@ class Enemy{
             y += 1;
             that.yPosition = y;
             that.drawPlane(x,y);
+            that.checkCrash();
         },20);
         return y;
+    }
+    checkCrash(){
+        if (this.yPosition > 500){
+            clearInterval(this.intervalReset);
+            player.life--;
+            lifeOutput.innerHTML = `${player.life}`;
+            if(player.life < 1){
+                player.finishGame();
+            }
+        }
     }
     
 }
 
+const player = {
+    life: 2,
+    alive: true,
+    ammo: 30,
+    cash: 0,
+    finishGame(){
+        console.log("gra skończona");
+        this.alive = false;
+        enemyArray.forEach(obj => clearInterval(obj.intervalReset));
+    }
+}
 
 
    let counter = 0;
@@ -68,27 +74,43 @@ class Enemy{
 
 function createEnemy(){
     
-    if(counter < 10){
+    if(counter < 10 && player.alive){
         enemyArray[counter] = new Enemy();
         setTimeout(createEnemy, 2000);
         counter++;
     }  
 
 }
-canvas.addEventListener('click', function(e){
-     let rect = canvas.getBoundingClientRect();
-   let x = e.clientX - rect.left;
-  let y = e.clientY - rect.top;
-  //  ammo--;
-    
+
+function game(){
+    canvas.addEventListener('click', function(e){
+        let rect = canvas.getBoundingClientRect();
+        let x = e.clientX - rect.left;
+        let y = e.clientY - rect.top;
+        
+        player.ammo--;
+        ammoOutput.innerHTML = `${player.ammo}`;
+        
+        if(player.ammo < 0){
+            console.log("brak amunicji!!!");
+            return;
+        }
     enemyArray.forEach(obj => {
         if(((obj.xPosition + 32) > x && x > obj.xPosition) && ((obj.yPosition + 32) > y && y > obj.yPosition)){
+            player.cash += 50;
+            cashOutput.innerHTML = `${player.cash}`;
             clearInterval(obj.intervalReset);
         }
+        
     });
-//  if(((aa3.xPosition + 32) > x && x > aa3.xPosition) && ((aa3.yPosition + 32) > y && y > aa.yPosition)){
-//         console.log("trafiony obiekt aa3");
-//    }
-    //clearInterval(enemyArray[e].intervalReset);
+
 })
-createEnemy();
+    
+}
+
+button.addEventListener('click', function(){
+    createEnemy();
+    button.parentElement.removeChild(button);
+});
+
+game();

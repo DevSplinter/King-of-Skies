@@ -24,15 +24,6 @@ body{
     border: solid 3px #fff;
     border-radius: 15px;
     width: 80%;
-    .canvas{
-        padding-left: 0;
-        padding-right: 0;
-        margin-left: auto;
-        margin-right: auto;
-        display: block;
-        width: 800px;
-        cursor: url(../img/sight.png) 40 40, auto;
-    }
     .control-panel{
         width: 300px;
         box-sizing: border-box;
@@ -48,7 +39,7 @@ body{
         &__heart{
             margin-top:30px;
             font-size: 30px;
-            animation: bounding 2s infinite;
+            animation: pounding 2s infinite;
         }
     }
     .legend{
@@ -65,15 +56,30 @@ body{
             align-items: center;
         }
     }
+    .btn-start-game{
+        position: absolute;
+        width: 300px;
+        height: 100px;
+        margin: auto;
+        top: 0; left: 0; bottom: 0; right: 0;
+    }
 }
 #game-box{
     border: solid 1px #000;
-     background: linear-gradient(#267fc4 30%, #2283ba);
-      overflow: hidden;
-}
+    background: url(../img/sky2.jpeg);
+    background-size: 100% 100%;
+    overflow: hidden;
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    width: 800px;
+    cursor: url(../img/sight.png) 40 40, auto;
+    }
 
 
-@keyframes bounding{
+@keyframes pounding{
     0% {transform: scale(.9);}
     50% {
         transform: scale(1.3);
