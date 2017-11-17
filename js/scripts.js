@@ -1,15 +1,14 @@
 const canvas = document.querySelector('#game-box');
 const ctx = canvas.getContext('2d');
-const plane = document.querySelector('img');
+const plane = document.querySelector('.legend__img');
 let canvasTop = canvas.offsetTop;
 const button = document.querySelector('.btn-start-game');
 const cashOutput = document.querySelector('.control-panel__cash');
 const lifeOutput = document.querySelector('.control-panel__life');
 const ammoOutput = document.querySelector('.control-panel__ammo');
-
-
-
-
+const ammoIcon = document.querySelector('.control-panel__ammo-icon');
+let counter = 0;
+const enemyArray = [];
 
 class Enemy{
     constructor(){
@@ -40,7 +39,7 @@ class Enemy{
             that.yPosition = y;
             that.drawPlane(x,y);
             that.checkCrash();
-        },20);
+        },10);
         return y;
     }
     checkCrash(){
@@ -52,8 +51,7 @@ class Enemy{
                 player.finishGame();
             }
         }
-    }
-    
+    }  
 }
 
 const player = {
@@ -68,49 +66,43 @@ const player = {
     }
 }
 
-
-   let counter = 0;
-   let enemyArray = [];
-
 function createEnemy(){
     
     if(counter < 10 && player.alive){
         enemyArray[counter] = new Enemy();
-        setTimeout(createEnemy, 2000);
+        setTimeout(createEnemy, 800);
         counter++;
     }  
-
 }
 
 function game(){
     canvas.addEventListener('click', function(e){
         let rect = canvas.getBoundingClientRect();
         let x = e.clientX - rect.left;
-        let y = e.clientY - rect.top;
-        
-        
-        console.log("canvas cord: " + x + ', ' + y);
-        console.log("plane cord: " + enemyArray[0].xPosition + ', ' + enemyArray[0].yPosition);
+        let y = e.clientY - rect.top;   
         
         if(player.ammo > 0){
-              player.ammo--;
-        ammoOutput.value = `${player.ammo}`;
+            ammoIcon.classList.add('control-panel__ammo-icon--shoot');
+            ammoIcon.addEventListener('animationend', function(){
+                this.classList.remove('control-panel__ammo-icon--shoot');
+            });
+            player.ammo--;
+            ammoOutput.value = `${player.ammo}`;
         }else{
+            ammoIcon.classList.add('control-panel__ammo-icon--out');
             console.log("brak amunicji!!!");
             return;
         }
         
-    enemyArray.forEach(obj => {
-        if(((obj.xPosition + 32) > x && x > obj.xPosition) && ((obj.yPosition + 32) > y && y > obj.yPosition)){
-            player.cash += 50;
-            cashOutput.value = `${player.cash}`;
-            clearInterval(obj.intervalReset);
-        }
-        
-    });
-
-})
-    
+        enemyArray.forEach(obj => {
+            if(((obj.xPosition + 32) > x && x > obj.xPosition) && ((obj.yPosition + 32) > y && y > obj.yPosition)){
+                player.cash += obj.cash;
+                cashOutput.value = `${player.cash}`;
+                clearInterval(obj.intervalReset);
+                obj.cash = 0;
+            } 
+        });
+    }) 
 }
 
 button.addEventListener('click', function(){
