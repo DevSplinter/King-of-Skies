@@ -22,10 +22,8 @@ body {
   background-color: rgba(255, 255, 255, 0.5);
   padding: 30px;
   border: solid 3px #fff;
-  border-radius: 15px;
-  width: 80%; }
+  border-radius: 15px; }
   .main-box .control-panel {
-    width: 300px;
     box-sizing: border-box;
     text-align: right;
     margin-right: 50px;
@@ -37,9 +35,8 @@ body {
     .main-box .control-panel__heart {
       margin-top: 30px;
       font-size: 30px;
-      animation: bounding 2s infinite; }
+      animation: pounding 2s infinite; }
   .main-box .legend {
-    width: 300px;
     box-sizing: border-box;
     margin-left: 50px;
     margin-top: 50px; }
@@ -62,17 +59,17 @@ body {
 #game-box {
   border: solid 1px #000;
   background: url(../img/sky2.jpeg);
-  background-size: 100% 100%;
+  background-size: 105% 100%;
+  background-repeat: no-repeat;
   overflow: hidden;
   padding-left: 0;
   padding-right: 0;
   margin-left: auto;
   margin-right: auto;
   display: block;
-  width: 800px;
   cursor: url(../img/sight.png) 40 40, auto; }
 
-@keyframes bounding {
+@keyframes pounding {
   0% {
     transform: scale(0.9); }
   50% {

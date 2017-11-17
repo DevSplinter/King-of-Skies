@@ -47,7 +47,7 @@ class Enemy{
         if (this.yPosition > 500){
             clearInterval(this.intervalReset);
             player.life--;
-            lifeOutput.innerHTML = `${player.life}`;
+            lifeOutput.value = `${player.life}`;
             if(player.life < 1){
                 player.finishGame();
             }
@@ -62,7 +62,7 @@ const player = {
     ammo: 30,
     cash: 0,
     finishGame(){
-        console.log("gra skończona");
+        console.log("przegrałeś!");
         this.alive = false;
         enemyArray.forEach(obj => clearInterval(obj.intervalReset));
     }
@@ -88,17 +88,22 @@ function game(){
         let x = e.clientX - rect.left;
         let y = e.clientY - rect.top;
         
-        player.ammo--;
-        ammoOutput.innerHTML = `${player.ammo}`;
         
-        if(player.ammo < 0){
+        console.log("canvas cord: " + x + ', ' + y);
+        console.log("plane cord: " + enemyArray[0].xPosition + ', ' + enemyArray[0].yPosition);
+        
+        if(player.ammo > 0){
+              player.ammo--;
+        ammoOutput.value = `${player.ammo}`;
+        }else{
             console.log("brak amunicji!!!");
             return;
         }
+        
     enemyArray.forEach(obj => {
         if(((obj.xPosition + 32) > x && x > obj.xPosition) && ((obj.yPosition + 32) > y && y > obj.yPosition)){
             player.cash += 50;
-            cashOutput.innerHTML = `${player.cash}`;
+            cashOutput.value = `${player.cash}`;
             clearInterval(obj.intervalReset);
         }
         
