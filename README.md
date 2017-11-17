@@ -2,4 +2,4 @@
 Canvas, OOP project
 
 
-LINK: danieldrzazga.pl/game
+LINK: http://danieldrzazga.pl/game
