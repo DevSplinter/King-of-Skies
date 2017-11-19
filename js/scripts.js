@@ -9,15 +9,18 @@ const ammoOutput = document.querySelector('.control-panel__ammo');
 const ammoIcon = document.querySelector('.control-panel__ammo-icon');
 let counter = 0;
 const enemyArray = [];
+let startGame = false;
 
 class Enemy{
-    constructor(){
+    constructor(speed){
         this.life = 2;
         this.cash = 50;
+        this.speed = speed;
         this.xPosition = this.randPosition();
         this.drawPlane();
         this.yPosition = this.interval();
         this.intervalReset;
+        
     }
     randPosition(){
        let x;
@@ -34,12 +37,13 @@ class Enemy{
         let y = 0;
         let x = this.xPosition;
         let that = this;
+        let speed = this.speed;
         this.intervalReset = setInterval(function(){
             y += 1;
             that.yPosition = y;
             that.drawPlane(x,y);
             that.checkCrash();
-        },10);
+        }, speed);
         return y;
     }
     checkCrash(){
@@ -51,7 +55,12 @@ class Enemy{
                 player.finishGame();
             }
         }
-    }  
+    }
+    removePlane(x, y){
+        ctx.beginPath();
+        ctx.clearRect(x, y, 32, 32);
+        ctx.closePath();
+    }
 }
 
 const player = {
@@ -69,7 +78,7 @@ const player = {
 function createEnemy(){
     
     if(counter < 10 && player.alive){
-        enemyArray[counter] = new Enemy();
+        enemyArray[counter] = new Enemy(20);
         setTimeout(createEnemy, 800);
         counter++;
     }  
@@ -81,14 +90,14 @@ function game(){
         let x = e.clientX - rect.left;
         let y = e.clientY - rect.top;   
         
-        if(player.ammo > 0){
+        if(player.ammo > 0 && player.alive && startGame){
             ammoIcon.classList.add('control-panel__ammo-icon--shoot');
             ammoIcon.addEventListener('animationend', function(){
                 this.classList.remove('control-panel__ammo-icon--shoot');
             });
             player.ammo--;
             ammoOutput.value = `${player.ammo}`;
-        }else{
+        }else if(startGame){
             ammoIcon.classList.add('control-panel__ammo-icon--out');
             console.log("brak amunicji!!!");
             return;
@@ -100,12 +109,14 @@ function game(){
                 cashOutput.value = `${player.cash}`;
                 clearInterval(obj.intervalReset);
                 obj.cash = 0;
+                obj.removePlane(obj.xPosition, obj.yPosition);
             } 
         });
     }) 
 }
 
 button.addEventListener('click', function(){
+    startGame = true;
     createEnemy();
     button.parentElement.removeChild(button);
 });
