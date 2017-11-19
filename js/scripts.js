@@ -7,6 +7,7 @@ const cashOutput = document.querySelector('.control-panel__cash');
 const lifeOutput = document.querySelector('.control-panel__life');
 const ammoOutput = document.querySelector('.control-panel__ammo');
 const ammoIcon = document.querySelector('.control-panel__ammo-icon');
+const levelOutput = document.querySelector('.control-panel__level');
 let counter = 0;
 const enemyArray = [];
 let startGame = false;
@@ -75,13 +76,49 @@ const player = {
     }
 }
 
-function createEnemy(){
-    
-    if(counter < 10 && player.alive){
-        enemyArray[counter] = new Enemy(20);
-        setTimeout(createEnemy, 800);
+const levels = {
+    first: {
+        name: "Poziom 1",
+        speed: 20,
+        enemySum: 15
+    },
+    second: {
+        name: "Poziom 2",
+        speed: 15,
+        enemySum: 40
+    },
+    third: {
+        name: "Poziom 3",
+        speed: 10,
+        enemySum: 65
+    }
+}
+
+function levelController(){
+    if(counter < levels.first.enemySum) {
+        fillLevelInfo(levels.first.name);
+        createEnemy(levels.first.speed);
+    }else if(counter < levels.second.enemySum){
+        fillLevelInfo(levels.second.name);
+        createEnemy(levels.second.speed);
+    }else if(counter < levels.third.enemySum){
+        fillLevelInfo(levels.third.name);
+        createEnemy(levels.third.speed);
+    }
+}
+
+function createEnemy(speed){
+    if(player.alive){
+        enemyArray[counter] = new Enemy(speed);
+        setTimeout(levelController, 800);
         counter++;
-    }  
+    }
+}
+
+function fillLevelInfo(nameLabel){
+    if(nameLabel != levelOutput.value){
+        levelOutput.value = `${nameLabel}`;
+    }
 }
 
 function game(){
@@ -117,7 +154,7 @@ function game(){
 
 button.addEventListener('click', function(){
     startGame = true;
-    createEnemy();
+    levelController();
     button.parentElement.removeChild(button);
 });
 
