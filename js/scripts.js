@@ -1,6 +1,7 @@
 const canvas = document.querySelector('#game-box');
 const ctx = canvas.getContext('2d');
-const plane = document.querySelector('.legend__img');
+const jetPlane = document.querySelector('.legend__img-jet');
+const heavyPlane = document.querySelector('.legend__img-heavy');
 let canvasTop = canvas.offsetTop;
 const button = document.querySelector('.btn-start-game');
 const cashOutput = document.querySelector('.control-panel__cash');
@@ -13,10 +14,9 @@ const enemyArray = [];
 let startGame = false;
 
 class Enemy{
-    constructor(speed){
-        this.life = 2;
-        this.cash = 50;
+    constructor(speed, type){
         this.speed = speed;
+        this.type = type;
         this.xPosition = this.randPosition();
         this.drawPlane();
         this.yPosition = this.interval();
@@ -29,8 +29,8 @@ class Enemy{
     }
     drawPlane(x,y){        
         ctx.beginPath();
-        ctx.clearRect(x, y-32, 32, 64);
-        ctx.drawImage(plane, x, y);
+        ctx.clearRect(x, y-1, 32, 32);
+        ctx.drawImage(this.type, x, y);
         ctx.rect(x, y, 32, 32);
         ctx.closePath();
         };
@@ -64,10 +64,27 @@ class Enemy{
     }
 }
 
+class ModernJet extends Enemy {
+    constructor(speed){
+        super(speed, jetPlane);
+        this.life = 1;
+        this.cash = 30;
+    }
+    
+}
+
+class HeavyPlane extends Enemy {
+    constructor(speed){
+        super(speed, heavyPlane);
+        this.life = 2;
+        this.cash = 50;
+    }
+}
+
 const player = {
     life: 2,
     alive: true,
-    ammo: 30,
+    ammo: 130,
     cash: 0,
     finishGame(){
         console.log("przegrałeś!");
@@ -80,38 +97,47 @@ const levels = {
     first: {
         name: "Poziom 1",
         speed: 20,
-        enemySum: 15
+        enemySum: 15,
+        difficulty: 5
     },
     second: {
         name: "Poziom 2",
         speed: 15,
-        enemySum: 40
+        enemySum: 40,
+        difficulty: 4
     },
     third: {
         name: "Poziom 3",
         speed: 10,
-        enemySum: 65
+        enemySum: 65,
+        difficulty: 2
     }
 }
 
 function levelController(){
     if(counter < levels.first.enemySum) {
         fillLevelInfo(levels.first.name);
-        createEnemy(levels.first.speed);
+        createEnemy(levels.first.speed, levels.first.difficulty);
     }else if(counter < levels.second.enemySum){
         fillLevelInfo(levels.second.name);
-        createEnemy(levels.second.speed);
+        createEnemy(levels.second.speed, levels.second.difficulty);
     }else if(counter < levels.third.enemySum){
         fillLevelInfo(levels.third.name);
-        createEnemy(levels.third.speed);
+        createEnemy(levels.third.speed, levels.third.difficulty);
     }
 }
 
-function createEnemy(speed){
+function createEnemy(speed, difficulty){
     if(player.alive){
-        enemyArray[counter] = new Enemy(speed);
-        setTimeout(levelController, 800);
-        counter++;
+        if(counter % difficulty != 0){
+            enemyArray[counter] = new ModernJet(speed);
+            setTimeout(levelController, 800);
+            counter++;
+        }else{
+            enemyArray[counter] = new HeavyPlane(speed);
+            setTimeout(levelController, 800);
+            counter++;
+        }
     }
 }
 
@@ -142,14 +168,17 @@ function game(){
         
         enemyArray.forEach(obj => {
             if(((obj.xPosition + 32) > x && x > obj.xPosition) && ((obj.yPosition + 32) > y && y > obj.yPosition)){
-                player.cash += obj.cash;
-                cashOutput.value = `${player.cash}`;
-                clearInterval(obj.intervalReset);
-                obj.cash = 0;
-                obj.removePlane(obj.xPosition, obj.yPosition);
+                obj.life--;
+                if(obj.life < 1){
+                    player.cash += obj.cash;
+                    cashOutput.value = `${player.cash}`;
+                    clearInterval(obj.intervalReset);
+                    obj.cash = 0;
+                    obj.removePlane(obj.xPosition, obj.yPosition);
+                }
             } 
         });
-    }) 
+    }); 
 }
 
 button.addEventListener('click', function(){
