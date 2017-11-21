@@ -166,15 +166,17 @@ function game(){
             return;
         }
         
-        enemyArray.forEach(obj => {
+        enemyArray.forEach((obj, index) => {
             if(((obj.xPosition + 32) > x && x > obj.xPosition) && ((obj.yPosition + 32) > y && y > obj.yPosition)){
                 obj.life--;
                 if(obj.life < 1){
+                    console.log(enemyArray);
                     player.cash += obj.cash;
                     cashOutput.value = `${player.cash}`;
                     clearInterval(obj.intervalReset);
                     obj.cash = 0;
                     obj.removePlane(obj.xPosition, obj.yPosition);
+                    enemyArray.splice(index, 1);
                 }
             } 
         });

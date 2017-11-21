@@ -8,6 +8,7 @@ body{
     align-items: center;
     flex-direction: column;
     user-select: none;
+    font-family: 'Spectral SC', serif;
 }
 .main-title{
     font-size: 60px;
@@ -30,10 +31,9 @@ body{
         margin-right: 50px;
         margin-top:50px;
         &__box{
-            margin:30px 0;
-        }
-        &__cash{
+            font-weight: bold;
             font-size: 30px;
+            margin:30px 0;
         }
         &__heart{
             margin-top:30px;
@@ -58,14 +58,31 @@ body{
             display: flex;
             justify-content: flex-start;
             align-items: center;
+            font-size: 30px;
+            font-weight: bold;
         }
     }
     .btn-start-game{
+        font-family: 'Spectral SC', serif;
         position: absolute;
-        width: 300px;
+        width: 310px;
         height: 100px;
         margin: auto;
         top: 0; left: 0; bottom: 0; right: 0;
+        border: 2px solid #fff;
+        background-color: rgba(255,255,255,0.5);
+        box-shadow: 2px 2px 3px 2px #000;
+        border-radius: 10px;
+        font-size: 18px;
+        font-weight: bold;
+        &__spark{
+            position: relative; top:5px;
+            padding-left: 10px;
+            padding-right: 10px;
+            font-size: 30px;
+            color: #daa520;
+            text-shadow: 2px 1px #000000;
+        }
     }
 }
 #game-box{
